@@ -52,7 +52,8 @@ from gplay_mobile_search import MobilePlayAPI
 api = MobilePlayAPI(
     locale="ru_RU",
     timezone="Europe/Moscow", 
-    delay=2.0  # Задержка между запросами (секунды)
+    delay=2.0,  # Задержка между запросами (секунды)
+    proxy="http://user:pass@proxy.example.com:8080"  # Опционально
 )
 
 # Анонимный логин (через Aurora Store dispenser)
@@ -101,7 +102,19 @@ print(details)
 Google Play API имеет rate limiting. Решения:
 1. Используйте `delay` параметр (по умолчанию 2 секунды)
 2. При 429 ошибке скрипт автоматически ждёт и повторяет
-3. Для массового парсинга используйте прокси
+3. Для массового парсинга используйте прокси:
+
+```python
+api = MobilePlayAPI(
+    proxy="http://user:pass@proxy.example.com:8080"
+)
+```
+
+Или через переменные окружения:
+```bash
+export HTTP_PROXY='http://localhost:8080'
+export HTTPS_PROXY='http://localhost:8080'
+```
 
 ## Токены
 

@@ -57,11 +57,36 @@ class MobilePlayAPI:
     
     CONFIG_PATH = os.path.expanduser("~/.config/gplay_mobile_api.json")
     
-    def __init__(self, locale: str = "en_US", timezone: str = "UTC", delay: float = 2.0):
-        self.api = GooglePlayAPI(locale=locale, timezone=timezone, delay=delay)
+    def __init__(
+        self, 
+        locale: str = "en_US", 
+        timezone: str = "UTC", 
+        delay: float = 2.0,
+        proxy: str = None
+    ):
+        """
+        Initialize Mobile Play API.
+        
+        Args:
+            locale: Locale string (e.g., "en_US", "ru_RU")
+            timezone: Timezone (e.g., "UTC", "Europe/Moscow")
+            delay: Delay between requests in seconds (default 2.0)
+            proxy: HTTP proxy URL (e.g., "http://user:pass@host:port")
+        """
+        proxies_config = None
+        if proxy:
+            proxies_config = {"http": proxy, "https": proxy}
+        
+        self.api = GooglePlayAPI(
+            locale=locale, 
+            timezone=timezone, 
+            delay=delay,
+            proxies_config=proxies_config
+        )
         self._logged_in = False
         self.locale = locale
         self.delay = delay
+        self.proxy = proxy
         
     def _load_config(self) -> Optional[dict]:
         """Load saved tokens from config file"""
