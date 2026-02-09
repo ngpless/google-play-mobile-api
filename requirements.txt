@@ -1,0 +1,2 @@
+# Google Play Mobile API dependencies
+playstoreapi @ git+https://github.com/AbhiTheModder/playstoreapi
